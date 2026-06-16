@@ -32,7 +32,13 @@
 
                     <tbody>
                     @foreach($weathers as $weather)
-                        <tr @if(session('new_weather_id') === $weather->id) class="table-success" @endif>
+                        <tr
+                            @if(session('new_weather_id') === $weather->id)
+                                class="table-success"
+                            @elseif(session('updated_weather_id') === $weather->id)
+                                class="table-warning"
+                            @endif
+                        >
                             <td>{{ $weather->city }}</td>
                             <td>
                             <span class="badge bg-primary">
@@ -42,9 +48,8 @@
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="#" class="btn btn-warning btn-sm">Edit</a>
-
-                                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{{ route('admin.weather.edit', ['weather' => $weather->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{{ route('admin.weather.delete', ['weather' => $weather->id]) }}" class="btn btn-danger btn-sm">Delete</a>
                                 </div>
                             </td>
                         </tr>

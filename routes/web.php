@@ -20,6 +20,15 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/add-weather', [WeatherController::class, 'addWeather'])
         ->name('admin.weather.add');
 
+    Route::get('/edit-weather/{weather}', [WeatherController::class, 'getWeather'])
+        ->name('admin.weather.edit');
+
+    Route::post('/edit-weather/{weather}', [WeatherController::class, 'editWeather'])
+        ->name('admin.weather.update');
+
+    Route::get('/delete-weather/{weather}', [WeatherController::class, 'deleteWeather'])
+        ->name('admin.weather.delete');
+
 
     Route::get('/weather', [WeatherController::class, 'adminIndex'])
         ->name('admin.weather');
