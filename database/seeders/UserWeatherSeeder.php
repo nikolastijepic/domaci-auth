@@ -14,14 +14,20 @@ class UserWeatherSeeder extends Seeder
      */
     public function run(): void
     {
-        $city = $this->command->ask('Unesite ime grada:');
-        if ($city === null) {
+        $city = $this->command->ask('Unesite ime grada');
+        if (empty($city)) {
             $this->command->error('Niste uneli ime grada!');
+            return;
+        }
+        if (Weather::where('city', $city)->exists()) {
+            $this->command->error("Ne mozete uneti grad $city jer vec postoji!");
+            return;
         }
 
-        $temperature = $this->command->ask('Unesite temperaturu:');
-        if ($temperature === null) {
+        $temperature = $this->command->ask('Unesite temperaturu');
+        if ($temperature === null || trim($temperature) === '') {
             $this->command->error('Niste uneli temperaturu!');
+            return;
         }
 
         Weather::create([
