@@ -23,9 +23,19 @@ class UserSeeder extends Seeder
         $this->command->getOutput()->progressStart($amount);
 
         for ($i = 0; $i < $amount; $i++) {
+
+            $email = $faker->unique()->safeEmail();
+
+            if (User::where('email', $email)->exists()) {
+                $this->command->newLine();
+                $this->command->warn("Korisnik sa mejlom $email vec postoji.");
+
+                continue;
+            }
+
             User::create([
                 'name' => $faker->name(),
-                'email' => $faker->unique()->safeEmail(),
+                'email' => $email,
                 'password' => Hash::make($password),
             ]);
 
