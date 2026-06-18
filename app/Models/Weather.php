@@ -11,4 +11,9 @@ class Weather extends Model
         'city',
         'temperature',
         ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }
