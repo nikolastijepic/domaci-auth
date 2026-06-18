@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\Weather;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,20 +14,21 @@ class WeatherSeeder extends Seeder
      */
     public function run(): void
     {
-        $weather = [
-            'Beograd' => 25,
-            'Novi Sad' => 26,
-            'Nis' => 24,
-            'Banja Luka' => 25,
-            'Sarajevo' => 24,
-        ];
+        $cities = City::all();
 
-        foreach ($weather as $city => $temperature)
+        if ($cities->isEmpty()) {
+            $this->command->error('No cities found.');
+            return;
+        }
+
+        foreach ($cities as $city)
         {
             Weather::create([
-                'city' => $city,
-                'temperature' => $temperature,
+                'city_id' => $city->id,
+                'temperature' => rand(15, 35),
             ]);
         }
+
+        $this->command->info('Weather seeding completed.');
     }
 }
