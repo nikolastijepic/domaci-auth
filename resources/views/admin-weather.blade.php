@@ -39,7 +39,7 @@
                                 class="table-warning"
                             @endif
                         >
-                            <td>{{ $weather->city }}</td>
+                            <td>{{ $weather->city->name }}</td>
                             <td>
                             <span class="badge bg-primary">
                                 {{ $weather->temperature }} °C
