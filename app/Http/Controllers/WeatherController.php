@@ -15,7 +15,7 @@ class WeatherController extends Controller
 
     public function adminIndex()
     {
-        $weathers = Weather::all();
+        $weathers = Weather::with('city')->get();
         return view('admin-weather', compact('weathers'));
     }
 
