@@ -1,0 +1,46 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\City;
+use App\Models\Forecast;
+use Faker\Factory;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class ForecastSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+
+        $faker = Factory::create();
+        $cities = City::all();
+        if ($cities->isEmpty()) {
+            $this->command->error('No cities found. Please run CitySeeder first.');
+            return;
+        }
+
+        $totalForecasts = $cities->count() * 5;
+
+        $this->command->getOutput()->progressStart($totalForecasts);
+        foreach ($cities as $city) {
+
+            for ($i = 0; $i < 5; $i++) {
+
+                Forecast::create([
+                    'city_id' => $city->id,
+                    'temperature' => $faker->randomFloat(1, -10, 40),
+                    'date' => now()->addDays($i),
+                ]);
+
+                $this->command->getOutput()->progressAdvance();
+            }
+        }
+        $this->command->getOutput()->progressFinish();
+        $this->command->newLine();
+        $this->command->info('Forecast seeding completed.');
+    }
+}
