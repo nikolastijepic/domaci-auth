@@ -29,10 +29,17 @@ class ForecastSeeder extends Seeder
 
             for ($i = 0; $i < 5; $i++) {
 
+                $condition = $faker->randomElement(['rainy', 'sunny', 'snowy']);
+                $probability = in_array($condition, ['rainy', 'snowy'])
+                    ? $faker->numberBetween(0, 100)
+                    : null;
+
                 Forecast::create([
                     'city_id' => $city->id,
                     'temperature' => $faker->randomFloat(1, -10, 40),
                     'date' => now()->addDays($i),
+                    'weather_type' => $condition,
+                    'probability' => $probability,
                 ]);
 
                 $this->command->getOutput()->progressAdvance();
