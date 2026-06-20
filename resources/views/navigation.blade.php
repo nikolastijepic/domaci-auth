@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('weather') ? 'active' : '' }}" href="/weather">Weather</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('forecasts') ? 'active' : '' }}" href="/forecasts">Forecasts</a>
+                </li>
             </ul>
         </div>
     </div>
