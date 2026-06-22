@@ -20,10 +20,12 @@
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover mb-0">
-                        <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>Date</th>
                             <th>Temperature</th>
+                            <th>Weather type</th>
+                            <th>Probability</th>
                         </tr>
                         </thead>
 
@@ -32,6 +34,8 @@
                             <tr>
                                 <td>{{ $forecast->date }}</td>
                                 <td>{{ $forecast->temperature }} °C</td>
+                                <td>{{ $forecast->weather_type }}</td>
+                                <td>{{ $forecast->probability }}</td>
                             </tr>
                         @endforeach
                         </tbody>
