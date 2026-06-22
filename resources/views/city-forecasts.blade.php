@@ -18,6 +18,8 @@
                     <tr>
                         <th>Date</th>
                         <th>Temperature</th>
+                        <th>Weather type</th>
+                        <th>Probability</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -25,7 +27,8 @@
                         <tr>
                             <td>{{ $forecast->date }}</td>
                             <td>{{ $forecast->temperature }} °C</td>
-
+                            <td>{{ $forecast->weather_type }}</td>
+                            <td>{{ $forecast->probability }}</td>
                         </tr>
                     @endforeach
                     </tbody>
