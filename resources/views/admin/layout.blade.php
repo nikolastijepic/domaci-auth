@@ -7,7 +7,7 @@
     <title>@yield('pageTitle')</title>
 </head>
 <body>
-@include('admin-navigation')
+@include('admin.navigation')
 
 @yield('pageContent')
 </body>

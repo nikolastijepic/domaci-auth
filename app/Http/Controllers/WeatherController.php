@@ -16,12 +16,12 @@ class WeatherController extends Controller
     public function adminIndex()
     {
         $weathers = Weather::with('city')->get();
-        return view('admin-weather', compact('weathers'));
+        return view('admin.weather', compact('weathers'));
     }
 
     public function addWeatherIndex()
     {
-        return view('add-weather');
+        return view('admin.add-weather');
     }
 
     public function addWeather(Request $request)
@@ -41,7 +41,7 @@ class WeatherController extends Controller
 
     public function getWeather(Weather $weather)
     {
-        return view('edit-weather', compact('weather'));
+        return view('admin.edit-weather', compact('weather'));
     }
 
     public function editWeather(Request $request, Weather $weather)

@@ -1,4 +1,4 @@
-@extends('admin-layout')
+@extends('admin.layout')
 
 @section('pageTitle')
     Add Weather - Admin

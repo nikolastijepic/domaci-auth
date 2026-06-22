@@ -1,4 +1,4 @@
-@extends('admin-layout')
+@extends('admin.layout')
 
 @section('pageTitle')
     Weather - Admin
@@ -48,8 +48,10 @@
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('admin.weather.edit', ['weather' => $weather->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="{{ route('admin.weather.delete', ['weather' => $weather->id]) }}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{{ route('admin.weather.edit', ['weather' => $weather->id]) }}"
+                                       class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{{ route('admin.weather.delete', ['weather' => $weather->id]) }}"
+                                       class="btn btn-danger btn-sm">Delete</a>
                                 </div>
                             </td>
                         </tr>
