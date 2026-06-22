@@ -51,7 +51,9 @@
                                     <a href="{{ route('admin.weather.edit', ['weather' => $weather->id]) }}"
                                        class="btn btn-warning btn-sm">Edit</a>
                                     <a href="{{ route('admin.weather.delete', ['weather' => $weather->id]) }}"
-                                       class="btn btn-danger btn-sm">Delete</a>
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Are you sure you want to delete this weather record?')"
+                                    >Delete</a>
                                 </div>
                             </td>
                         </tr>

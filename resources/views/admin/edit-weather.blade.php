@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('pageTitle')
-    Add Weather - Admin
+    Edit Weather - Admin
 @endsection
 
 
@@ -28,7 +28,7 @@
                                class="form-control"
                                id="city"
                                placeholder="Enter city name"
-                               value="{{ $weather->city }}">
+                               value="{{ $weather->city->name }}">
                     </div>
                     <div class="mb-3">
                         <label for="amount" class="form-label">Temperature</label>
