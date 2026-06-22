@@ -40,6 +40,13 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/weather', [WeatherController::class, 'adminIndex'])
         ->name('admin.weather');
 
+
+    Route::get('/add-forecast', [ForecastController::class, 'addForecastIndex']);
+
+    Route::post('/add-forecast', [ForecastController::class, 'addForecast'])
+        ->name('admin.forecast.add');
+
+
 });
 
 
