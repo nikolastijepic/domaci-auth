@@ -20,4 +20,15 @@ class Forecast extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function getTemperatureClassAttribute(): string
+    {
+        return match (true) {
+            $this->temperature <= 0 => 'text-primary',
+            $this->temperature <= 15 => 'text-info',
+            $this->temperature <= 25 => 'text-success',
+            $this->temperature <= 30 => 'text-warning',
+            default => 'text-danger',
+        };
+    }
 }

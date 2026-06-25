@@ -33,7 +33,9 @@
                         @foreach($cityForecasts as $forecast)
                             <tr>
                                 <td>{{ $forecast->date }}</td>
-                                <td>{{ $forecast->temperature }} °C</td>
+                                <td class="{{ $forecast->temperature_class }}">
+                                    {{ $forecast->temperature }} °C
+                                </td>
                                 <td>{{ $forecast->weather_type }}</td>
                                 <td>{{ $forecast->probability }}</td>
                             </tr>
