@@ -40,10 +40,10 @@ class WeatherController extends Controller
             'name' => $validated['city'],
         ]);
 
-        $weather = Weather::create([
-            'city_id' => $city->id,
-            'temperature' => $validated['temperature'],
-        ]);
+        $weather = Weather::updateOrCreate(
+            ['city_id' => $city->id,],
+            ['temperature' => $validated['temperature'],]
+        );
 
         return redirect()
             ->route('admin.weather')
