@@ -11,7 +11,7 @@ class ForecastController extends Controller
     public function index()
     {
         $forecasts = Forecast::with('city')->get();
-        $groupedForecasts = $forecasts->groupBy('city_id');
+        $groupedForecasts = $forecasts->groupBy('city_id')->map->sortBy('date');
         return view('forecasts', compact('groupedForecasts'));
     }
 
