@@ -33,11 +33,11 @@
                         @foreach($cityForecasts as $forecast)
                             <tr>
                                 <td>{{ $forecast->date }}</td>
-                                <td class="{{ $forecast->temperature_class }}">
+                                <td class="{{ \App\Http\Helpers\ForecastHelper::temperatureColor($forecast->temperature) }}">
                                     {{ $forecast->temperature }} °C
                                 </td>
                                 <td>
-                                    <i class="{{ $forecast->weatherIcon() }}"></i>
+                                    <i class="{{ \App\Http\Helpers\ForecastHelper::weatherIcon($forecast->weather_type) }}"></i>
                                 </td>
                                 <td>{{ $forecast->probability }}</td>
                             </tr>
