@@ -38,7 +38,7 @@
                                     {{ $forecast->temperature }} °C
                                 </td>
                                 <td>
-                                    <i class="{{ ForecastHelper::weatherIcon($forecast->weather_type) }}"></i>
+                                    <i class="fa-solid {{ ForecastHelper::weatherIcon($forecast->weather_type) }}"></i>
                                 </td>
                                 <td>{{ $forecast->probability }}</td>
                             </tr>

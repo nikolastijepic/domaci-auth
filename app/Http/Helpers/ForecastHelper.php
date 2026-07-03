@@ -18,10 +18,11 @@ class ForecastHelper
     public static function weatherIcon(string $weatherType): string
     {
         return match ($weatherType) {
-            'rainy' => 'fa-solid fa-cloud-rain',
-            'sunny' => 'fa-solid fa-sun',
-            'snowy' => 'fa-solid fa-snowflake',
-            default => 'fa-solid fa-question',
+            'sunny' => 'fa-sun',
+            'cloudy' => 'fa-cloud',
+            'rainy' => 'fa-cloud-rain',
+            'snowy' => 'fa-snowflake',
+            default => 'fa-question',
         };
     }
 }
