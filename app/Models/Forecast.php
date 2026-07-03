@@ -31,4 +31,14 @@ class Forecast extends Model
             default => 'text-danger',
         };
     }
+
+    public function weatherIcon(): string
+    {
+        return match ($this->weather_type) {
+            'rainy' => 'fa-solid fa-cloud-rain',
+            'sunny' => 'fa-solid fa-sun',
+            'snowy' => 'fa-solid fa-snowflake',
+            default => 'fa-solid fa-question',
+        };
+    }
 }

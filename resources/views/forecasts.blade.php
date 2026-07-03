@@ -36,7 +36,9 @@
                                 <td class="{{ $forecast->temperature_class }}">
                                     {{ $forecast->temperature }} °C
                                 </td>
-                                <td>{{ $forecast->weather_type }}</td>
+                                <td>
+                                    <i class="{{ $forecast->weatherIcon() }}"></i>
+                                </td>
                                 <td>{{ $forecast->probability }}</td>
                             </tr>
                         @endforeach
