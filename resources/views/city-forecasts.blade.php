@@ -1,3 +1,4 @@
+@php use App\Http\Helpers\ForecastHelper; @endphp
 @extends('layout')
 
 @section('pageTitle')
@@ -26,10 +27,12 @@
                     @foreach($forecasts as $forecast)
                         <tr>
                             <td>{{ $forecast->date }}</td>
-                            <td class="{{ $forecast->temperature_class }}">
+                            <td class="{{ ForecastHelper::temperatureColor($forecast->temperature) }}">
                                 {{ $forecast->temperature }} °C
                             </td>
-                            <td>{{ $forecast->weather_type }}</td>
+                            <td>
+                                <i class="{{ ForecastHelper::weatherIcon($forecast->weather_type) }}"></i>
+                            </td>
                             <td>{{ $forecast->probability }}</td>
                         </tr>
                     @endforeach
