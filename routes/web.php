@@ -5,9 +5,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
+
+Route::get('/search-results', [ForecastController::class, 'search'])
+->name('search.results');
 
 Route::get('/weather', [WeatherController::class, 'index'])
 ->name('weather');

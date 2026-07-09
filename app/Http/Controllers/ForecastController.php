@@ -70,4 +70,19 @@ class ForecastController extends Controller
         $forecasts = Forecast::where(['city_id' => $city->id])->get();
         return view('city-forecasts', compact('forecasts', 'city'));
     }
+
+    public function search(Request $request)
+    {
+        $cityName = $request->get('city');
+
+        $cities = City::where('name', 'LIKE', "%{$cityName}%")->get();
+
+        if (count($cities) == 0) {
+            return back()->with('error', true)->withInput();
+        }
+
+        return view('search-results', compact('cities', 'cityName'));
+
+
+    }
 }
