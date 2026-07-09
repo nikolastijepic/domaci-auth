@@ -22,7 +22,7 @@ class ForecastSeeder extends Seeder
             return;
         }
 
-        $totalForecasts = $cities->count() * 5;
+        $totalForecasts = $cities->count() * 30;
 
         $this->command->getOutput()->progressStart($totalForecasts);
         foreach ($cities as $city) {
@@ -31,7 +31,7 @@ class ForecastSeeder extends Seeder
             $previousMinTemperature = null;
             $previousMaxTemperature = null;
 
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 30; $i++) {
 
                 $validWeatherCondition = false;
 
