@@ -21,4 +21,10 @@ class City extends Model
     {
         return $this->hasOne(Weather::class);
     }
+
+    public function todayForecast()
+    {
+        return $this->hasOne(Forecast::class)
+            ->whereDate('date', today());
+    }
 }

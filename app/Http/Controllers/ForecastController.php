@@ -75,14 +75,14 @@ class ForecastController extends Controller
     {
         $cityName = $request->get('city');
 
-        $cities = City::where('name', 'LIKE', "%{$cityName}%")->get();
+        $cities = City::where('name', 'LIKE', "%{$cityName}%")
+            ->with('todayForecast')
+            ->get();
 
         if (count($cities) == 0) {
             return back()->with('error', true)->withInput();
         }
 
         return view('search-results', compact('cities', 'cityName'));
-
-
     }
 }

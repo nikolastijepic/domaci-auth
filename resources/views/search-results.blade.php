@@ -1,3 +1,4 @@
+@php use App\Http\Helpers\ForecastHelper; @endphp
 @extends('layout')
 
 @section('pageTitle')
@@ -8,9 +9,9 @@
 @section('pageContent')
     <div class="container mt-4">
         <div class="mb-3">
-            <h4 class="mb-1">Rezultati pretrage</h4>
+            <h4 class="mb-1">Search Results</h4>
             <p class="text-body-secondary mb-0">
-                Pronađeno {{ $cities->count() }} gradova
+                {{ $cities->count() }} cities found
             </p>
         </div>
 
@@ -20,7 +21,7 @@
                     <a href="{{ route('city.forecasts', $city) }}"
                        class="card text-decoration-none h-100 shadow-sm">
                         <div class="card-body d-flex align-items-center">
-                            <i class="bi bi-geo-alt-fill fs-4 text-primary me-3"></i>
+                            <i class="fa-solid {{ ForecastHelper::weatherIcon($city->todayForecast->weather_type) }} fs-4 text-primary me-3"></i>
                             <div class="flex-grow-1">
                                 <h6 class="card-title mb-0">
                                     {{ $city->name }}
