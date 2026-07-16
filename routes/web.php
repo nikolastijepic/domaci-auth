@@ -3,6 +3,7 @@
 use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WeatherController;
+use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -21,7 +22,7 @@ Route::get('/forecasts/{city:name}', [ForecastController::class, 'cityForecasts'
 
 
 
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::middleware('auth')->prefix('admin')->middleware(AdminCheckMiddleware::class)->group(function () {
 
     Route::get('/add-weather', [WeatherController::class, 'addWeatherIndex']);
 
