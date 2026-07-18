@@ -50,8 +50,6 @@
                             </a>
                         @endif
 
-
-
                         <a href="{{ route('city.forecasts', $city) }}"
                            class="card text-decoration-none h-100 w-100 shadow-sm">
                             <div class="card-body d-flex align-items-center">

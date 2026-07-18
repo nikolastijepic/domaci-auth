@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\ForecastController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserCityController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
 Route::get('/search-results', [ForecastController::class, 'search'])
 ->name('search.results');
