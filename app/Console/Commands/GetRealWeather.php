@@ -7,7 +7,7 @@ use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-#[Signature('weather:get-real')]
+#[Signature('weather:get-real {city}')]
 #[Description('This command is used to synchronize real life weather with our application using the Open API.')]
 class GetRealWeather extends Command
 {
@@ -17,14 +17,20 @@ class GetRealWeather extends Command
     public function handle()
     {
         $response = Http::get(
-            'https://api.weatherapi.com/v1/current.json',
+            env('WEATHER_API_URL').'v1/forecast.json',
             [
-                'key' => '36ba4c547f484de6abc41235261907',
-                'q' => 'Belgrade',
+                'key' => env('WEATHER_API_KEY'),
+                'q' => $this->argument('city'),
                 'aqi' => 'no',
             ]
         );
 
-        dd($response->json());
+        $jsonResponse = $response->json();
+        if (isset($jsonResponse['error']))
+        {
+            $this->output->error($jsonResponse['error']['message']);
+        }
+
+        dd($jsonResponse);
     }
 }
