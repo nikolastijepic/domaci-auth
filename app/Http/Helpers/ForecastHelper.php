@@ -20,6 +20,7 @@ class ForecastHelper
         $weatherType = strtolower($weatherType);
 
         return match (true) {
+            str_contains($weatherType, 'sand'),
             str_contains($weatherType, 'sun'),
             str_contains($weatherType, 'clear') => 'sunny',
 
