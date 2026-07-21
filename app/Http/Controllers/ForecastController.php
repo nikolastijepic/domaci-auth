@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\ForecastHelper;
 use App\Models\City;
 use App\Models\Forecast;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class ForecastController extends Controller
 {
@@ -76,15 +78,73 @@ class ForecastController extends Controller
 
     public function search(Request $request)
     {
-        $cityName = $request->get('city');
+        $validated = $request->validate([
+            'city' => 'required|string|min:2|max:100',
+        ]);
+
+        $cityName = $validated['city'];
 
         $cities = City::where('name', 'LIKE', "%{$cityName}%")
             ->with('todayForecast')
             ->get();
 
-        if (count($cities) == 0) {
-            return back()->with('error', true)->withInput();
+        if ($cities->isEmpty()) {
+            $response = Http::get(
+                env('WEATHER_API_URL').'v1/forecast.json',
+                [
+                    'key' => env('WEATHER_API_KEY'),
+                    'q' => $cityName,
+                    'aqi' => 'no',
+                ]
+
+            );
+
+            if ($response->failed()) {
+                return back()->with('error', 'Unable to fetch weather data.');
+            }
+
+            $jsonResponse = $response->json();
+            $forecast = $jsonResponse['forecast']['forecastday'][0];
+
+            $city = City::create([
+                'name' => $jsonResponse['location']['name'],
+            ]);
+
+            Forecast::create([
+                'city_id' => $city->id,
+                'temperature' => $forecast['day']['avgtemp_c'],
+                'date' => $forecast['date'],
+                'weather_type' => ForecastHelper::mapWeatherType($forecast['day']['condition']['text']),
+                'probability' => $forecast['day']['daily_chance_of_rain'],
+                ]);
+        } else {
+            foreach ($cities as $city) {
+                if ($city->todayForecast === null) {
+                    $response = Http::get(
+                        env('WEATHER_API_URL').'v1/forecast.json',
+                        [
+                            'key' => env('WEATHER_API_KEY'),
+                            'q' => $city->name,
+                            'aqi' => 'no',
+                        ]);
+
+                    $jsonResponse = $response->json();
+                    $forecast = $jsonResponse['forecast']['forecastday'][0];
+
+                    Forecast::create([
+                        'city_id' => $city->id,
+                        'temperature' => $forecast['day']['avgtemp_c'],
+                        'date' => $forecast['date'],
+                        'weather_type' => ForecastHelper::mapWeatherType($forecast['day']['condition']['text']),
+                        'probability' => $forecast['day']['daily_chance_of_rain'],
+                    ]);
+                }
+            }
         }
+
+        $cities = City::where('name', 'LIKE', "%{$cityName}%")
+            ->with('todayForecast')
+            ->get();
 
         $userFavorites = [];
         if (Auth::check()) {
