@@ -17,6 +17,11 @@
 
         <div>
             @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if(session('auth_error'))
                 <div class="alert alert-warning text-center">
                     <p class="mb-3">{{ session('error') }}</p>
 

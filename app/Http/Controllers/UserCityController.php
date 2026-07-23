@@ -12,7 +12,7 @@ class UserCityController extends Controller
     {
         $user = auth()->user();
         if ($user == null) {
-            return redirect()->back()->with(['error' => 'You must be logged in to add a city to your favorites!']);
+            return redirect()->back()->with(['auth_error' => 'You must be logged in to add a city to your favorites!']);
         }
 
         UserCity::firstOrCreate([
@@ -27,7 +27,7 @@ class UserCityController extends Controller
     {
         $user = auth()->user();
         if ($user == null) {
-            return redirect()->back()->with(['error' => 'You must be logged in to remove a city from your favorites!']);
+            return redirect()->back()->with(['auth_error' => 'You must be logged in to remove a city from your favorites!']);
         }
 
         UserCity::where('user_id', $user->id)
