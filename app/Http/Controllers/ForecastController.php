@@ -154,4 +154,26 @@ class ForecastController extends Controller
 
         return view('search-results', compact('cities', 'cityName', 'userFavorites'));
     }
+
+    public function cityForecast(City $city)
+    {
+        $response = Http::get(
+            env('WEATHER_API_URL').'v1/astronomy.json',
+            [
+                'key' => env('WEATHER_API_KEY'),
+                'q' => $city->name,
+                'aqi' => 'no',
+            ]
+        );
+
+        if ($response->failed()) {
+            return back()->with('error', 'Unable to fetch weather data.');
+        }
+
+        $jsonResponse = $response->json();
+        $sunrise = $jsonResponse['astronomy']['astro']['sunrise'];
+        $sunset = $jsonResponse['astronomy']['astro']['sunset'];
+
+        return view('city-forecast', compact('city', 'sunrise', 'sunset'));
+    }
 }

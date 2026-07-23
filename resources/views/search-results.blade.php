@@ -50,7 +50,7 @@
                             </a>
                         @endif
 
-                        <a href="{{ route('city.forecasts', $city) }}"
+                        <a href="{{ route('city.forecast', $city) }}"
                            class="card text-decoration-none h-100 w-100 shadow-sm">
                             <div class="card-body d-flex align-items-center">
                                 <i class="fa-solid {{ ForecastHelper::weatherIcon($city->todayForecast->weather_type) }} fs-4 text-primary me-3"></i>

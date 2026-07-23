@@ -23,6 +23,9 @@ Route::get('/forecasts', [ForecastController::class, 'index'])
 Route::get('/forecasts/{city:name}', [ForecastController::class, 'cityForecasts'])
 ->name('city.forecasts');
 
+Route::get('/forecast/{city:name}', [ForecastController::class, 'cityForecast'])
+    ->name('city.forecast');
+
 Route::get('/user-cities/favorite/{city}', [UserCityController::class, 'addFavorite'])
     ->name('user.city.favorite.add');
 
