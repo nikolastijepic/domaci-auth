@@ -18,7 +18,7 @@
 
             @if(session('error'))
                 <div class="alert alert-warning text-center">
-                    No cities found matching "<strong>{{ old('city') }}</strong>".
+                    {{ session('error') }}
                 </div>
             @endif
 
