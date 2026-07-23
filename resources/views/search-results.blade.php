@@ -21,15 +21,15 @@
                     {{ session('error') }}
                 </div>
             @endif
-            @if(session('auth_error'))
-                <div class="alert alert-warning text-center">
-                    <p class="mb-3">{{ session('error') }}</p>
+                @if(session('auth_error'))
+                    <div class="alert alert-warning text-center">
+                        <p class="mb-3">{{ session('auth_error') }}</p>
 
-                    <a href="{{ route('login') }}" class="btn btn-primary">
-                        Log in
-                    </a>
-                </div>
-            @endif
+                        <a href="{{ route('login') }}" class="btn btn-primary">
+                            Log in
+                        </a>
+                    </div>
+                @endif
         </div>
 
         <div>
