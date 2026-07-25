@@ -22,11 +22,12 @@ class GetRealWeather extends Command
         $cityName = $this->argument('city');
 
         $cities = City::where('name', 'LIKE', "%{$cityName}%")
-            ->with('todayForecast')
             ->get();
 
+        $weatherService = new WeatherService();
+
         if ($cities->isEmpty()) {
-            $weatherService = new WeatherService();
+
             $jsonResponse = $weatherService->getForecast($cityName);
 
             if ($jsonResponse === null) {
@@ -37,6 +38,7 @@ class GetRealWeather extends Command
 
             $city = City::create([
                 'name' => $jsonResponse['location']['name'],
+                'timezone' => $jsonResponse['location']['tz_id'],
             ]);
 
             Forecast::create([
@@ -48,13 +50,17 @@ class GetRealWeather extends Command
             ]);
         } else {
             foreach ($cities as $city) {
-                if ($city->todayForecast === null) {
-                    $weatherService = new WeatherService();
+
+                if ($city->getTodayForecast() === null) {
                     $jsonResponse = $weatherService->getForecast($city->name);
 
                     if ($jsonResponse === null) {
                         return Command::FAILURE;
                     }
+
+                    $city->update([
+                        'timezone' => $jsonResponse['location']['tz_id'],
+                    ]);
 
                     $forecast = $jsonResponse['forecast']['forecastday'][0];
 

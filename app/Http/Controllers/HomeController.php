@@ -14,13 +14,16 @@ class HomeController extends Controller
         $user = auth()->user();
 
         $favorites = $user
-            ? $user->cityFavorites()->with('city.todayForecast')->get()
+            ? $user->cityFavorites()->with('city')->get()
             : collect();
 
         // TODO: Koristiti WeatherAPI batch POST endpoint umesto vise GET zahteva.
         if (!$favorites->isEmpty()) {
             foreach ($favorites as $favorite) {
-                if ($favorite->city->todayForecast === null) {
+
+                $todayForecast = $favorite->city->getTodayForecast();
+
+                if ($todayForecast === null) {
                     $response = Http::get(
                         env('WEATHER_API_URL').'v1/forecast.json',
                         [
@@ -34,6 +37,11 @@ class HomeController extends Controller
                     }
 
                     $jsonResponse = $response->json();
+
+                    $favorite->city->update([
+                        'timezone' => $jsonResponse['location']['tz_id'],
+                    ]);
+
                     $forecast = $jsonResponse['forecast']['forecastday'][0];
 
                     Forecast::create([
@@ -46,10 +54,6 @@ class HomeController extends Controller
                 }
             }
         }
-
-        $favorites = $user
-            ? $user->cityFavorites()->with('city.todayForecast')->get()
-            : collect();
 
         return view('welcome', compact( 'favorites'));
     }

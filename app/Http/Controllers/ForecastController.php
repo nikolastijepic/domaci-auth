@@ -94,7 +94,6 @@ class ForecastController extends Controller
         }
 
         $cities = City::where('name', 'LIKE', "%{$cityName}%")
-            ->with('todayForecast')
             ->get();
 
         $userFavorites = [];

@@ -10,6 +10,7 @@ class City extends Model
 
     protected $fillable = [
         'name',
+        'timezone',
     ];
 
     public function forecasts()
@@ -22,9 +23,12 @@ class City extends Model
         return $this->hasOne(Weather::class);
     }
 
-    public function todayForecast()
+    public function getTodayForecast()
     {
-        return $this->hasOne(Forecast::class)
-            ->whereDate('date', today());
+        $timezone = $this->timezone ?? config('app.timezone');
+        $today = now($timezone)->toDateString();
+        return $this->forecasts()
+            ->whereDate('date', $today)
+            ->first();
     }
 }

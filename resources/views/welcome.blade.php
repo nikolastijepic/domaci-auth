@@ -48,13 +48,18 @@
 
             <div class="d-flex flex-column gap-3">
                 @foreach($favorites as $favorite)
+
+                    @php
+                        $todayForecast = $favorite->city->getTodayForecast();
+                    @endphp
+
                     <a class="card text-decoration-none h-100 w-100 shadow-sm">
                         <div class="card-body d-flex justify-content-center align-items-center gap-3">
 
-                            <i class="fa-solid {{ ForecastHelper::weatherIcon($favorite->city->todayForecast->weather_type) }} fs-4 text-primary me-3"></i>
+                            <i class="fa-solid {{ ForecastHelper::weatherIcon($todayForecast?->weather_type) }} fs-4 text-primary me-3"></i>
 
-                            <div class="{{ ForecastHelper::temperatureColor($favorite->city->todayForecast->temperature) }} fw-bold fs-3 me-4">
-                                {{ $favorite->city->todayForecast->temperature }}°
+                            <div class="{{ ForecastHelper::temperatureColor($todayForecast?->temperature) }} fw-bold fs-3 me-4">
+                                {{ $todayForecast?->temperature }}°
                             </div>
 
                             <div class="flex-grow-1">

@@ -42,6 +42,11 @@
 
         <div class="row g-3 align-items-stretch">
             @foreach($cities as $city)
+
+                @php
+                    $todayForecast = $city->getTodayForecast();
+                @endphp
+
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="d-flex align-items-center">
 
@@ -58,7 +63,7 @@
                         <a href="{{ route('city.forecast', $city) }}"
                            class="card text-decoration-none h-100 w-100 shadow-sm">
                             <div class="card-body d-flex align-items-center">
-                                <i class="fa-solid {{ ForecastHelper::weatherIcon($city->todayForecast->weather_type) }} fs-4 text-primary me-3"></i>
+                                <i class="fa-solid {{ ForecastHelper::weatherIcon($todayForecast?->weather_type) }} fs-4 text-primary me-3"></i>
                                 <div class="flex-grow-1">
                                     <h6 class="card-title mb-0">
                                         {{ $city->name }}
