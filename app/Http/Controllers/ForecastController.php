@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Forecast;
+use App\Services\WeatherService;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -105,25 +106,20 @@ class ForecastController extends Controller
         return view('search-results', compact('cities', 'cityName', 'userFavorites'));
     }
 
-    public function cityForecast(City $city)
-    {
-        $response = Http::get(
-            env('WEATHER_API_URL').'v1/astronomy.json',
-            [
-                'key' => env('WEATHER_API_KEY'),
-                'q' => $city->name,
-                'aqi' => 'no',
-            ]
-        );
+    public function cityForecast(City $city, WeatherService $weatherService)
 
-        if ($response->failed()) {
+    {
+        $jsonResponse = $weatherService->getWeatherData($city->name);
+
+        if ($jsonResponse === null) {
             return back()->with('error', 'Unable to fetch weather data.');
         }
 
-        $jsonResponse = $response->json();
-        $sunrise = $jsonResponse['astronomy']['astro']['sunrise'];
-        $sunset = $jsonResponse['astronomy']['astro']['sunset'];
+        $astro = $jsonResponse['forecast']['forecastday'][0]['astro'];
+        $sunrise = $astro['sunrise'];
+        $sunset = $astro['sunset'];
 
         return view('city-forecast', compact('city', 'sunrise', 'sunset'));
+
     }
 }

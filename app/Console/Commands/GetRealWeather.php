@@ -28,7 +28,7 @@ class GetRealWeather extends Command
 
         if ($cities->isEmpty()) {
 
-            $jsonResponse = $weatherService->getForecast($cityName);
+            $jsonResponse = $weatherService->getWeatherData($cityName);
 
             if ($jsonResponse === null) {
                 return Command::FAILURE;
@@ -52,7 +52,7 @@ class GetRealWeather extends Command
             foreach ($cities as $city) {
 
                 if ($city->getTodayForecast() === null) {
-                    $jsonResponse = $weatherService->getForecast($city->name);
+                    $jsonResponse = $weatherService->getWeatherData($city->name);
 
                     if ($jsonResponse === null) {
                         return Command::FAILURE;

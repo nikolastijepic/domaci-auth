@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class WeatherService
 {
-    public function getForecast($city)
+    public function getWeatherData($city)
     {
         $response = Http::get(
             env('WEATHER_API_URL').'v1/forecast.json',
